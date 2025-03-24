@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech to Text & Analysis</title>
+  </head>
+  <body>
+    <h1>Speech to Text, NER & Sentiment Analysis</h1>
+
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit">Start Recording</button>
+    </form>
+
+    {% if text %}
+    <h2>Recognized Text:</h2>
+    <p>{{ text }}</p>
+
+    {% if entities %}
+    <h2>Named Entities:</h2>
+    <ul>
+      {% for entity, label in entities %}
+      <li><strong>{{ entity }}</strong> ({{ label }})</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No named entities found.</p>
+    {% endif %}
+
+    <h2>~ Sentiment Analysis: ~</h2>
+    <ul>
+      <li>Positive: {{ sentiment.pos }}</li>
+      <li>Neutral: {{ sentiment.neu }}</li>
+      <li>Negative: {{ sentiment.neg }}</li>
+      <li>Overall Score: {{ sentiment.compound }}</li>
+    </ul>
+    {% endif %}
+  </body>
+</html>
